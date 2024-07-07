@@ -31,7 +31,7 @@ export const ProductCard: FC<IProductCard> = ({ id, name, description, price, pi
         </div>
         <div className="flex gap-4 flex-col md:flex-row">
           <Link
-            href={`${APP_ROUTES.PRODUCTS}/edit?id=${id}&name=${name}&description=${description}&price=${price}&picture=${picture}`}
+            href={`${APP_ROUTES.PRODUCTS}/edit/${id}?name=${name}&description=${description}&price=${price}&picture=${picture}`}
             className="border border-gray-200 rounded-lg p-1 w-40 font-semibold transition-all duration-300 hover:bg-gray-200 text-center"
           >
             Edit
