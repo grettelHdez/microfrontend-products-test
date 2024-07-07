@@ -1,0 +1,27 @@
+GET http://localhost:3000/api/products
+
+### Post
+POST http://localhost:3000/api/products
+
+{
+  "name": "Laptop HP Pavilio",
+  "description": "A good computer",
+  "price": 700,
+  "picture": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Agi--z2QwIpMNDCSJ1Q1eK9W65yB-W8LuQ&s"
+}
+
+### Update
+PUT http://localhost:3000/api/products/7be334dd-c9cd-47a7-966a-e66368318439
+
+{
+  "price": 150000
+}
+
+### Get a product
+GET http://localhost:3000/api/products/bd346a33-55db-4720-bc3a-984130bebb25
+
+###
+GET http://localhost:3000/api/products/7be334dd-c9cd-47a7-966a-e66368318439
+
+### Delete a product
+DELETE http://localhost:3000/api/products/bd346a33-55db-4720-bc3a-984130bebb25
