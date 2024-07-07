@@ -1,6 +1,6 @@
 import { create } from "zustand"
-import { API_URL, getProducts } from "@/utils/utils"
 import { ProductState } from "@/interfaces/product"
+import { API_URL, getProducts } from "@/utils/utils"
 
 export const useProductsStore = create<ProductState>((set, get) => ({
   products: [],

@@ -1,9 +1,9 @@
 import { FC, useState } from "react"
+import { useRouter } from "next/router"
 import { useProductsStore } from "@/store/store"
 import { Button, Form, Input } from "antd"
-import { useRouter } from "next/router"
-import { APP_ROUTES } from "@/utils/utils"
 import { IEditProduct, IProduct } from "@/interfaces/product"
+import { APP_ROUTES } from "@/utils/utils"
 
 type LayoutType = Parameters<typeof Form>[0]["layout"]
 

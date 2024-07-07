@@ -1,7 +1,7 @@
 import Head from "next/head"
 import { FC, useState } from "react"
-import { Navbar } from "../ui"
-import { Sidebar } from "../ui/Sidebar"
+import { Navbar } from "@/components/ui/Navbar"
+import { Sidebar } from "@/components/ui/Sidebar"
 import { Props } from "@/interfaces/ui"
 
 export const Layout: FC<Props> = ({ children }) => {

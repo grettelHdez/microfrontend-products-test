@@ -1,6 +1,6 @@
-import { ProductCard } from "@/components/products/ProductCard"
-import { useProduct } from "@/hooks/useProduct"
 import { useRouter } from "next/router"
+import { useProduct } from "@/hooks/useProduct"
+import { ProductCard } from "@/components/products/ProductCard"
 
 export default function Product() {
   const router = useRouter()

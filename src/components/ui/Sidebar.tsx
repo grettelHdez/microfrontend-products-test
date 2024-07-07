@@ -1,8 +1,8 @@
-import { FC } from "react"
 import Link from "next/link"
-import Icon from "@ant-design/icons/lib/components/Icon"
+import { FC } from "react"
 import { Layout, Menu } from "antd"
 import { ISidebar } from "@/interfaces/ui"
+import Icon from "@ant-design/icons/lib/components/Icon"
 
 const { Sider } = Layout
 

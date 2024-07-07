@@ -1,10 +1,9 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { useProductsStore } from "@/store/store"
 import { Button, Form, Input } from "antd"
 import { useRouter } from "next/router"
 import { APP_ROUTES } from "@/utils/utils"
-
-type LayoutType = Parameters<typeof Form>[0]["layout"]
+import { LayoutType } from "@/interfaces/ui"
 
 export const CreateProductForm = () => {
   const router = useRouter()
@@ -39,15 +38,7 @@ export const CreateProductForm = () => {
   }
 
   return (
-    <Form
-      className="w-full ms-12"
-      {...formItemLayout}
-      layout={formLayout}
-      form={form}
-      initialValues={{ layout: formLayout }}
-      onValuesChange={onFormLayoutChange}
-      style={{ maxWidth: formLayout === "inline" ? "none" : 600 }}
-    >
+    <Form className="w-full ms-12" {...formItemLayout} layout={formLayout} form={form} initialValues={{ layout: formLayout }} onValuesChange={onFormLayoutChange} style={{ maxWidth: formLayout === "inline" ? "none" : 600 }}>
       <Form.Item label="Name">
         <Input value={name} onChange={(e) => setName(e.target.value)} required />
       </Form.Item>

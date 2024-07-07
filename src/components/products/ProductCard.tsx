@@ -1,9 +1,9 @@
+import Link from "next/link"
 import { FC } from "react"
 import { IProductCard } from "@/interfaces/product"
 import { useProductsStore } from "@/store/store"
 import { useRouter } from "next/router"
 import { APP_ROUTES } from "@/utils/utils"
-import Link from "next/link"
 import { Popconfirm } from "antd"
 
 export const ProductCard: FC<IProductCard> = ({ id, name, description, price, picture }) => {
@@ -30,10 +30,7 @@ export const ProductCard: FC<IProductCard> = ({ id, name, description, price, pi
           <span className="text-3xl font-bold">${price}</span>
         </div>
         <div className="flex gap-4 flex-col md:flex-row">
-          <Link
-            href={`${APP_ROUTES.PRODUCTS}/edit/${id}`}
-            className="border border-gray-200 rounded-lg p-1 w-40 font-semibold transition-all duration-300 hover:bg-gray-200 text-center"
-          >
+          <Link href={`${APP_ROUTES.PRODUCTS}/edit/${id}`} className="border border-gray-200 rounded-lg p-1 w-40 font-semibold transition-all duration-300 hover:bg-gray-200 text-center">
             Edit
           </Link>
           <Popconfirm title="Sure to delete?" onConfirm={() => onDeleteProduct(id)}>

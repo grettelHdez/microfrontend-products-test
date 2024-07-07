@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:3000"
+export const BASE_URL = "http://localhost:3001"
 export const API_URL = `${BASE_URL}/api/products`
 
 export const APP_ROUTES = {
@@ -6,9 +6,13 @@ export const APP_ROUTES = {
 }
 
 export const getProducts = async () => {
-  const res = await fetch(API_URL)
-  const data = await res.json()
-  return data
+  try {
+    const res = await fetch(API_URL)
+    const data = await res.json()
+    return data
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const ImageUrl = () => {

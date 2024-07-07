@@ -5,8 +5,9 @@ export async function getProducts(req: NextApiRequest, res: NextApiResponse) {
   try {
     const products = await prisma.product.findMany()
 
-    if (products) return res.status(200).json(products)
-    else return res.status(400).json({ message: "Cannot find any product" })
+    if (products) {
+      return res.status(200).json(products)
+    } else return res.status(400).json({ message: "Cannot find any product" })
   } catch (error) {
     return res.status(400).json("Bad Request")
   }
