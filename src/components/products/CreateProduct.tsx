@@ -58,7 +58,7 @@ export const CreateProductForm = () => {
         <Input value={price} onChange={(e) => setPrice(e.target.value)} required />
       </Form.Item>
       <Form.Item label="Picture">
-        <Input value={picture} onChange={(e) => setPicture(e.target.value)} />
+        <Input value={picture} type="file" onChange={(e) => setPicture(e.target.value)} />
       </Form.Item>
       <Form.Item {...buttonItemLayout} className="w-full">
         <Button type="primary" className="w-full mt-5" onClick={createProduct}>

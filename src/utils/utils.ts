@@ -10,3 +10,7 @@ export const getProducts = async () => {
   const data = await res.json()
   return data
 }
+
+export const ImageUrl = () => {
+  
+}
