@@ -10,16 +10,19 @@ export const CreateProductForm = () => {
   const router = useRouter()
   const [form] = Form.useForm()
   const [formLayout, setFormLayout] = useState<LayoutType>("horizontal")
-  const addProduct = useProductsStore((state) => state.addProduct)
 
   const [name, setName] = useState("")
   const [description, setDescription] = useState("")
   const [price, setPrice] = useState("")
   const [picture, setPicture] = useState("")
+  const addProduct = useProductsStore((state) => state.addProduct)
 
   const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
     setFormLayout(layout)
   }
+
+  const formItemLayout = formLayout === "horizontal" ? { labelCol: { span: 4 }, wrapperCol: { span: 14 } } : null
+  const buttonItemLayout = formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null
 
   const createProduct = () => {
     if (name === "" || price === "") return
@@ -34,9 +37,6 @@ export const CreateProductForm = () => {
     addProduct(newProduct)
     router.push(APP_ROUTES.PRODUCTS)
   }
-
-  const formItemLayout = formLayout === "horizontal" ? { labelCol: { span: 4 }, wrapperCol: { span: 14 } } : null
-  const buttonItemLayout = formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null
 
   return (
     <Form

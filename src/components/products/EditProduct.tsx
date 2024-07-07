@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react"
+import { FC, useState } from "react"
 import { useProductsStore } from "@/store/store"
 import { Button, Form, Input } from "antd"
 import { useRouter } from "next/router"
@@ -11,27 +11,22 @@ export const EditProductForm: FC<IEditProduct> = ({ idProduct, nameProduct, desc
   const router = useRouter()
   const [form] = Form.useForm()
   const [formLayout, setFormLayout] = useState<LayoutType>("horizontal")
-  const editProduct = useProductsStore((state) => state.editProduct)
 
-  const [name, setName] = useState(() => {
-    return nameProduct
-  })
-  const [description, setDescription] = useState(() => {
-    return descriptionProduct
-  })
-  const [price, setPrice] = useState(() => {
-    return priceProduct
-  })
-  const [picture, setPicture] = useState(() => {
-    return pictureProduct
-  })
+  const [name, setName] = useState(nameProduct)
+  const [description, setDescription] = useState(descriptionProduct)
+  const [price, setPrice] = useState(priceProduct)
+  const [picture, setPicture] = useState(pictureProduct)
+  const editProduct = useProductsStore((state) => state.editProduct)
 
   const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
     setFormLayout(layout)
   }
 
+  const formItemLayout = formLayout === "horizontal" ? { labelCol: { span: 4 }, wrapperCol: { span: 14 } } : null
+  const buttonItemLayout = formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null
+
   const updateProduct = () => {
-    if (name === "" || price === "") return
+    if (name === "" || price === null) return
 
     const newProduct: IProduct = {
       id: String(idProduct),
@@ -44,9 +39,6 @@ export const EditProductForm: FC<IEditProduct> = ({ idProduct, nameProduct, desc
     editProduct(newProduct)
     router.push(APP_ROUTES.PRODUCTS)
   }
-
-  const formItemLayout = formLayout === "horizontal" ? { labelCol: { span: 4 }, wrapperCol: { span: 14 } } : null
-  const buttonItemLayout = formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null
 
   return (
     <Form

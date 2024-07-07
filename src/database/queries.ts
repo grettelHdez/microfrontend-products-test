@@ -40,7 +40,6 @@ export async function createProduct(req: NextApiRequest, res: NextApiResponse) {
     })
 
     if (product) {
-      console.log("new product: ", product)
       return res.status(200).json(product)
     }
     return res.status(400).json({ message: "Product not found" })

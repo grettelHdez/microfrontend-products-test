@@ -30,6 +30,6 @@ export interface IEditProduct {
   idProduct: string | string[] | undefined
   nameProduct: string | string[] | undefined
   descriptionProduct: string | string[] | undefined
-  priceProduct: string | string[] | undefined
+  priceProduct: number | undefined
   pictureProduct: string | string[] | undefined
 }

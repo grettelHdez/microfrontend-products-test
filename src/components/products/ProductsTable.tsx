@@ -84,7 +84,7 @@ export const ProductsTable = () => {
       title: "",
       dataIndex: "",
       render: (text: string, record: Record) => {
-        return products.length > 1 ? <Link href={`${APP_ROUTES.PRODUCTS}/${record.id}`}>Details</Link> : null
+        return products.length > 1 ? <Link href={`${APP_ROUTES.PRODUCTS}/details/${record.id}`}>Details</Link> : null
       },
     },
   ]
