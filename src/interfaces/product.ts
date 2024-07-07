@@ -1,11 +1,11 @@
 export interface IProduct {
   id?: string
   name: string
-  description: string
+  description?: string
   price: number
-  picture: string
+  picture?: File
   editable?: boolean
-  [column: string]: string | boolean | number | undefined
+  [column: string]: string | boolean | number | File | undefined
 }
 
 export interface ProductState {
@@ -24,7 +24,6 @@ export interface IProductCard {
   picture: string
   editable?: boolean
 }
-
 
 export interface IEditProduct {
   idProduct: string | string[] | undefined
