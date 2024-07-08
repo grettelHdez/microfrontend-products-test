@@ -60,7 +60,12 @@ export const ProductsTable = () => {
       dataIndex: "",
       render: (text: string, record: Record) => {
         return products.length >= 1 ? (
-          <Popconfirm title="Sure to delete?" onConfirm={() => onDelete(record.id)}>
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => {
+              if (record.id) onDelete(record.id)
+            }}
+          >
             <a href="#">Delete</a>
           </Popconfirm>
         ) : null
@@ -121,7 +126,17 @@ export const ProductsTable = () => {
   }
 
   const renderColumns = (text: string, record: Record, column: string) => {
-    return <EditableCell id={record.id} editable={record.editable} value={text} column={column} onChange={(value: string) => handleChange(value, record.id, column)} />
+    return (
+      <EditableCell
+        id={record.id}
+        editable={record.editable}
+        value={text}
+        column={column}
+        onChange={(value: string) => {
+          if (record.id) handleChange(value, record.id, column)
+        }}
+      />
+    )
   }
 
   return <Table className="table-products" bordered dataSource={products} columns={columns} />

@@ -1,11 +1,11 @@
 export interface Record {
-  id: string
-  editable: boolean
+  id?: string | undefined
+  editable?: boolean
 }
 
 export interface IEditableCell {
-  id: string
-  editable: boolean
+  id: string | undefined
+  editable?: boolean
   value: string
   column: string
   onChange: (value: string) => void
