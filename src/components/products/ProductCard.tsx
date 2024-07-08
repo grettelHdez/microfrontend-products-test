@@ -16,7 +16,7 @@ export const ProductCard: FC<IProductCard> = ({ id, name, description, price, pi
   
   const onDeleteProduct = (id: string | string[] | undefined) => {
     if (!id) return
-    deleteProduct(id)
+    deleteProduct(id.toString())
     router.push(APP_ROUTES.PRODUCTS)
   }
 
