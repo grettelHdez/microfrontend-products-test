@@ -11,33 +11,16 @@ export const useProductsStore = create<ProductState>((set, get) => ({
   },
 
   addProduct: async (newProduct) => {
-    // const formData = new FormData()
-    // formData.append("name", newProduct.name)
-    // formData.append("description", newProduct.description)
-    // formData.append("price", newProduct.price)
-    // formData.append("image", newProduct.picture)
-    // await axios.post(API_ROUTES.PRODUCTS, formData, {
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   },
-    // })
-    // const productRequest = {
-    //   method: "POST",
-    //   body: JSON.stringify({
-    //     name: newProduct.name,
-    //     description: newProduct.description,
-    //     price: newProduct.price,
-    //     picture: newProduct.pictureUrl,
-    //   }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // }
-    // const response = await fetch(API_URL, productRequest)
-    // const data = await response.json()
-    // const products = get().products
-    // const newProducts = [...products, { ...newProduct, id: data.id }]
-    // set({ products: newProducts })
+    try {
+      const res = await axios.post(API_ROUTES.PRODUCTS, newProduct)
+      const data = await res.data
+      const products = get().products
+      const newProducts = [...products, { ...newProduct, id: data.id }]
+      console.log(data.picture)
+      set({ products: newProducts })
+    } catch (error) {
+      console.log(error)
+    }
   },
 
   editProduct: async (updateProduct) => {

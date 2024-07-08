@@ -7,6 +7,7 @@ export const API_ROUTES = {
 
 export const APP_ROUTES = {
   PRODUCTS: `${BASE_URL}/products`,
+  IMAGES: `${BASE_URL}/images`,
 }
 
 export const getProducts = async () => {

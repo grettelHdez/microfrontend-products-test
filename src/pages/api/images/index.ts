@@ -3,7 +3,7 @@ import fs from "fs/promises"
 import formidable from "formidable"
 import { v4 as uuidv4 } from "uuid"
 import { NextApiRequest, NextApiResponse } from "next"
-import { API_ROUTES } from "@/utils/utils"
+import { API_ROUTES, APP_ROUTES } from "@/utils/utils"
 import { ProcessedFiles } from "@/interfaces/image"
 
 export const config = {
@@ -48,7 +48,7 @@ export async function uploadImage(req: NextApiRequest, res: NextApiResponse) {
       if (file) {
         const tempPath = file[1].filepath
         const imageId = uuidv4() + file[1].originalFilename
-        const imageUrl = `${API_ROUTES.IMAGES}/${imageId}`
+        const imageUrl = `${APP_ROUTES.IMAGES}/${imageId}`
         await fs.rename(tempPath, targetPath + imageId)
         console.log("url: ", imageUrl)
         console.log("Files were uploaded successfully")

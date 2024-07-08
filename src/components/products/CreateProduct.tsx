@@ -31,6 +31,7 @@ export const CreateProductForm = () => {
 
     if (file) {
       setImageFile(file)
+      console.log(file)
       setSelectedImage(URL.createObjectURL(file))
     }
   }

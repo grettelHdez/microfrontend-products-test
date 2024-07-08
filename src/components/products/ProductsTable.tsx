@@ -73,7 +73,7 @@ export const ProductsTable = () => {
       title: "",
       dataIndex: "",
       render: (text: string, record: Record) => {
-        return products.length > 1 ? (
+        return products.length >= 1 ? (
           <Popconfirm title="Sure to delete?" onConfirm={() => onDelete(record.id)}>
             <a href="#">Delete</a>
           </Popconfirm>
