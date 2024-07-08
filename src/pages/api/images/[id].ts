@@ -9,12 +9,7 @@ export async function getImage(req: NextApiRequest, res: NextApiResponse) {
       const imagePath = path.join(process.cwd(), "src", "/uploads", id.toString())
 
       try {
-        const image = await fs.readFile(imagePath, (err, image) => {
-          if (err) {
-            throw err
-          }
-          return image
-        })
+        const image = await fs.readFile(imagePath)
         return res.status(200).json({ message: "Image founded", image })
       } catch (error) {
         console.log("Image not found", error)
