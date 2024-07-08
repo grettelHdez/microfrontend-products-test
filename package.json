@@ -6,9 +6,9 @@
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} src/database/seed.ts"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "cross-env NEXT_PRIVATE_LOCAL_WEBPACK=true next dev -p 3001",
+    "build": "cross-env NEXT_PRIVATE_LOCAL_WEBPACK=true next build",
+    "start": "cross-env NEXT_PRIVATE_LOCAL_WEBPACK=true next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -16,14 +16,16 @@
     "@ant-design/icons": "^5.3.7",
     "@module-federation/nextjs-mf": "^8.3.26",
     "@prisma/client": "^5.16.1",
-    "@prisma/extension-accelerate": "^1.1.0",
+    "@types/formidable": "^3.4.5",
     "antd": "^5.19.0",
     "axios": "^1.7.2",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
+    "formidable": "^3.5.1",
     "next": "13.5.6",
     "react": "^18",
     "react-dom": "^18",
+    "uuid": "^10.0.0",
     "zod": "^3.23.8",
     "zustand": "^4.5.4"
   },

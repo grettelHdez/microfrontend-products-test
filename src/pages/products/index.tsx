@@ -4,7 +4,7 @@ import { ProductsTable } from "../../components/products/ProductsTable"
 import { PlusIcon } from "../../components/ui/icons/PlusIcon"
 import { BASE_URL } from "@/utils/utils"
 
-export default function Products() {
+export default function ProductPage() {
   return (
     <section className="flex flex-col gap-4">
       <div className="w-full flex justify-between">

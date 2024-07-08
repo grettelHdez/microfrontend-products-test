@@ -2,9 +2,10 @@ import { ChangeEvent, useState } from "react"
 import { useProductsStore } from "@/store/store"
 import { Button, Form, Input } from "antd"
 import { useRouter } from "next/router"
-import { APP_ROUTES } from "@/utils/utils"
+import { API_ROUTES, APP_ROUTES } from "@/utils/utils"
 import { LayoutType } from "@/interfaces/ui"
 import { InputImage } from "./InputImage"
+import axios from "axios"
 
 export const CreateProductForm = () => {
   const router = useRouter()
@@ -19,7 +20,7 @@ export const CreateProductForm = () => {
   const addProduct = useProductsStore((state) => state.addProduct)
 
   const [imageFile, setImageFile] = useState<File>()
-  const [imageUrl, setImageUrl] = useState("")
+  const [selectedImage, setSelectedImage] = useState("")
 
   const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
     setFormLayout(layout)
@@ -30,22 +31,39 @@ export const CreateProductForm = () => {
 
     if (file) {
       setImageFile(file)
-      setImageUrl(URL.createObjectURL(file))
+      setSelectedImage(URL.createObjectURL(file))
     }
   }
 
-  const createProduct = () => {
+  const createProduct = async () => {
     if (name === "" || price === "") return
 
-    const newProduct = {
-      name,
-      description,
-      price: Number(price),
-      picture: imageFile,
-    }
+    try {
+      const formData = new FormData()
+      formData.append("image", imageFile)
 
-    addProduct(newProduct)
-    router.push(APP_ROUTES.PRODUCTS)
+      const res = await axios.post(API_ROUTES.IMAGES, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+
+      const data = await res.data
+      const { imageUrl } = data
+      console.log("get image url from api/image:", imageUrl)
+
+      const newProduct = {
+        name,
+        description,
+        price: Number(price),
+        picture: imageUrl,
+      }
+
+      addProduct(newProduct)
+      router.push(APP_ROUTES.PRODUCTS)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -59,7 +77,7 @@ export const CreateProductForm = () => {
       <Form.Item label="Price">
         <Input value={price} onChange={(e) => setPrice(e.target.value)} required />
       </Form.Item>
-      <InputImage image={imageUrl} changeImageFile={changeImageFile} />
+      <InputImage image={selectedImage} changeImageFile={changeImageFile} />
       <Form.Item {...buttonItemLayout} className="w-full">
         <Button type="primary" className="w-full mt-5" onClick={createProduct}>
           Create

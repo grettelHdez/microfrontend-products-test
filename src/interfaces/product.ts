@@ -3,9 +3,10 @@ export interface IProduct {
   name: string
   description?: string
   price: number
-  picture?: File
+  picture?: string
+  pictureUrl?: string | undefined
   editable?: boolean
-  [column: string]: string | boolean | number | File | undefined
+  [column: string]: string | boolean | number | undefined
 }
 
 export interface ProductState {
