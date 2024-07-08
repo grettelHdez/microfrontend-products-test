@@ -15,7 +15,6 @@ export async function getImage(req: NextApiRequest, res: NextApiResponse) {
           }
           return image
         })
-        console.log("Image founded:", image)
         return res.status(200).json({ message: "Image founded", image })
       } catch (error) {
         console.log("Image not found", error)

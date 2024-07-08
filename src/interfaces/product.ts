@@ -13,7 +13,7 @@ export interface ProductState {
   updateProducts: (newProducts: IProduct[]) => void
   addProduct: (newProduct: IProduct) => void
   editProduct: (updateProduct: IProduct) => void
-  deleteProduct: (productId: string | string[] | undefined) => void
+  deleteProduct: (productId: string) => void
 }
 
 export interface IProductCard {

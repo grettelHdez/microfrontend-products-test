@@ -3,7 +3,7 @@ import { File } from "formidable"
 
 export interface PropsInputImage {
   image: string
-  imageUrl: string
+  imageUrl?: string | null
   changeImageFile: (e: ChangeEvent<HTMLInputElement>) => void
 }
 

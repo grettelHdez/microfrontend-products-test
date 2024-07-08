@@ -1,7 +1,5 @@
 import { EditProductForm } from "@/components/products/EditProduct"
-import { useImage } from "@/hooks/useImage"
 import { useProduct } from "@/hooks/useProduct"
-import { APP_ROUTES } from "@/utils/utils"
 import { useRouter } from "next/router"
 
 export default function EditProduct() {

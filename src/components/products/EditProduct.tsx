@@ -20,17 +20,9 @@ export const EditProductForm: FC<IEditProduct> = ({ idProduct, nameProduct, desc
     return idProduct
   })
 
-  const [name, setName] = useState(() => {
-    return nameProduct
-  })
-
-  const [description, setDescription] = useState(() => {
-    return descriptionProduct
-  })
-
-  const [price, setPrice] = useState(() => {
-    return priceProduct
-  })
+  const [name, setName] = useState(nameProduct)
+  const [description, setDescription] = useState(descriptionProduct)
+  const [price, setPrice] = useState(priceProduct)
 
   const imageId = pictureProduct?.toString().split(APP_ROUTES.IMAGES + "/")[1]
   const { imageUrl, imageFile, setImageFile } = useImage({ id: imageId })
@@ -53,7 +45,6 @@ export const EditProductForm: FC<IEditProduct> = ({ idProduct, nameProduct, desc
 
   const updateProduct = async () => {
     if (name === "" || !imageFile) return
-
     try {
       const formData = new FormData()
       formData.append("image", imageFile)
@@ -66,7 +57,6 @@ export const EditProductForm: FC<IEditProduct> = ({ idProduct, nameProduct, desc
 
       const data = await res.data
       const { imageUrl } = data
-      console.log("get image url from api/image:", imageUrl)
 
       const newProduct = {
         id,
@@ -79,7 +69,7 @@ export const EditProductForm: FC<IEditProduct> = ({ idProduct, nameProduct, desc
       editProduct(newProduct)
       router.push(APP_ROUTES.PRODUCTS)
     } catch (error) {
-      console.log(error)
+      console.log(error, 'editProduct')
     }
   }
 

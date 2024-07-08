@@ -13,12 +13,8 @@ export const config = {
 }
 
 export async function uploadImage(req: NextApiRequest, res: NextApiResponse) {
-  console.log("creaProduct-construct api post promise")
-
   try {
     const files = await new Promise<ProcessedFiles | undefined>((resolve, reject) => {
-      console.log("inside promise")
-
       const form = formidable()
       const files: ProcessedFiles = []
 
@@ -30,11 +26,8 @@ export async function uploadImage(req: NextApiRequest, res: NextApiResponse) {
       form.on("error", (err) => reject(err))
       form.parse(req, () => {})
     })
-    console.log(files)
-    console.log("before files lenght after form.parse")
 
     if (files?.length) {
-      console.log("files lenght")
       const targetPath = path.join(process.cwd(), `/src/uploads/`) //Create directory for uploads
 
       try {
@@ -50,7 +43,6 @@ export async function uploadImage(req: NextApiRequest, res: NextApiResponse) {
         const imageId = uuidv4() + file[1].originalFilename
         const imageUrl = `${APP_ROUTES.IMAGES}/${imageId}`
         await fs.rename(tempPath, targetPath + imageId)
-        console.log("url: ", imageUrl)
         console.log("Files were uploaded successfully")
         return res.status(200).json({ message: "Files were uploaded successfully", imageUrl })
       }

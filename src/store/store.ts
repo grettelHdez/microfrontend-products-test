@@ -16,7 +16,6 @@ export const useProductsStore = create<ProductState>((set, get) => ({
       const data = await res.data
       const products = get().products
       const newProducts = [...products, { ...newProduct, id: data.id }]
-      console.log(data.picture)
       set({ products: newProducts })
     } catch (error) {
       console.log(error)
@@ -24,39 +23,28 @@ export const useProductsStore = create<ProductState>((set, get) => ({
   },
 
   editProduct: async (updateProduct) => {
-    console.log(updateProduct)
-    const productRequest = {
-      method: "PUT",
-      body: JSON.stringify({
-        id: updateProduct.id,
-        name: updateProduct.name,
-        description: updateProduct.description,
-        price: Number(updateProduct.price),
-        picture: updateProduct.picture,
-      }),
+    try {
+      await axios.put(`${API_ROUTES.PRODUCTS}/${updateProduct.id}`, updateProduct)
+      const products = get().products
+      const indexProduct = products.findIndex((item) => item.id === updateProduct.id)
+      const headerProducts = products.slice(0, indexProduct)
+      const tailProducts = products.slice(indexProduct + 1)
+      const newProducts = [...headerProducts, updateProduct, ...tailProducts]
+      set({ products: newProducts })
+    } catch (error) {
+      console.log(error)
     }
-
-    await fetch(`${API_ROUTES.PRODUCTS}/${updateProduct.id}`, productRequest)
-    const products = get().products
-    const indexProduct = products.findIndex((item) => item.id === updateProduct.id)
-    const headerProducts = products.slice(0, indexProduct)
-    const tailProducts = products.slice(indexProduct + 1)
-    const newProducts = [...headerProducts, updateProduct, ...tailProducts]
-    set({ products: newProducts })
   },
 
   deleteProduct: async (productId) => {
-    const productRequest = {
-      method: "DELETE",
-      body: JSON.stringify({
-        id: productId,
-      }),
+    try {
+      await axios.delete(`${API_ROUTES.PRODUCTS}/${productId}`)
+      const products = get().products
+      const newProducts = products.filter((item) => item.id !== productId)
+      set({ products: newProducts })
+    } catch (error) {
+      console.log(error)
     }
-
-    await fetch(`${API_ROUTES.PRODUCTS}/${productId}`, productRequest)
-    const products = get().products
-    const newProducts = products.filter((item) => item.id !== productId)
-    set({ products: newProducts })
   },
 }))
 

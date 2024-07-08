@@ -48,9 +48,7 @@ export async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
 export async function updateProduct(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { id } = req.query
-    const { name, description, price, picture } = JSON.parse(req.body)
-
+    const { id, name, description, price, picture } = req.body
     if (id) {
       const product = await prisma.product.update({
         where: { id: id.toString() },

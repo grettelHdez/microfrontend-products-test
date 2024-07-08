@@ -1,3 +1,5 @@
+import axios from "axios"
+
 export const BASE_URL = "http://localhost:3001"
 
 export const API_ROUTES = {
@@ -12,12 +14,10 @@ export const APP_ROUTES = {
 
 export const getProducts = async () => {
   try {
-    const res = await fetch(API_ROUTES.PRODUCTS)
-    const data = await res.json()
+    const res = await axios.get(API_ROUTES.PRODUCTS)
+    const data = await res.data
     return data
   } catch (error) {
     console.log(error)
   }
 }
-
-export const ImageUrl = () => {}
