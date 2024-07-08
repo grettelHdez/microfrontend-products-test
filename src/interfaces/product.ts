@@ -3,8 +3,7 @@ export interface IProduct {
   name: string
   description?: string
   price: number
-  picture?: string
-  pictureUrl?: string | undefined
+  picture: string
   editable?: boolean
   [column: string]: string | boolean | number | undefined
 }
@@ -20,16 +19,16 @@ export interface ProductState {
 export interface IProductCard {
   id: string | string[] | undefined
   name: string
-  description: string
+  description: string | undefined
   price: number
   picture: string
   editable?: boolean
 }
 
 export interface IEditProduct {
-  idProduct: string | string[] | undefined
-  nameProduct: string | string[] | undefined
-  descriptionProduct: string | string[] | undefined
-  priceProduct: number | undefined
-  pictureProduct: string | string[] | undefined
+  idProduct?: string
+  nameProduct: string
+  descriptionProduct?: string
+  priceProduct: number
+  pictureProduct: string
 }

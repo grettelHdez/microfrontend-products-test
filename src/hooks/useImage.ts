@@ -1,14 +1,13 @@
 import axios from "axios"
-import { API_ROUTES } from "@/utils/utils"
 import { useEffect, useState } from "react"
+import { API_ROUTES } from "@/utils/utils"
 
-export const useImage = ({ id }) => {
+export const useImage = ({ id }: { id: string | string[] | undefined }) => {
   const [imageUrl, setImageUrl] = useState("")
 
   useEffect(() => {
     const getImage = async () => {
       try {
-        console.log("eff", `${API_ROUTES.IMAGES}/${id}`)
         const res = await axios.get(`${API_ROUTES.IMAGES}/${id}`)
         const data = await res.data
         const { image } = data

@@ -1,22 +1,19 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
+import { API_ROUTES } from "@/utils/utils"
 import { IProduct } from "@/interfaces/product"
-import { useProductsStore } from "@/store/store"
 
-const initialProductState = {
-  name: "",
-  description: "",
-  price: 0,
-  picture: "",
-}
-
-export const useProduct = ({ productId }: { productId: string | string[] | undefined }) => {
-  const [product, setProduct] = useState<IProduct>(initialProductState)
-  const products = useProductsStore((state) => state.products)
+export const useProduct = ({ id }: { id: string | string[] | undefined }) => {
+  const [product, setProduct] = useState<IProduct>()
 
   useEffect(() => {
-    const getProduct = products.find((item) => item.id === productId)
-    if (getProduct) setProduct(getProduct)
-  }, [productId])
+    const getProduct = async () => {
+      const res = await axios.get(`${API_ROUTES.PRODUCTS}/${id}`)
+      const { product } = await res.data
+      setProduct(product)
+    }
+    if (id) getProduct()
+  }, [id])
 
   return { product }
 }

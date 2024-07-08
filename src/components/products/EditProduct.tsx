@@ -1,55 +1,81 @@
-import { FC, useState } from "react"
-import { useRouter } from "next/router"
+import axios from "axios"
+import { ChangeEvent, FC, useState } from "react"
 import { useProductsStore } from "@/store/store"
 import { Button, Form, Input } from "antd"
-import { IEditProduct, IProduct } from "@/interfaces/product"
-import { APP_ROUTES } from "@/utils/utils"
-
-type LayoutType = Parameters<typeof Form>[0]["layout"]
+import { useRouter } from "next/router"
+import { API_ROUTES, APP_ROUTES } from "@/utils/utils"
+import { LayoutType } from "@/interfaces/ui"
+import { InputImage } from "./InputImage"
+import { IEditProduct } from "@/interfaces/product"
+import { useImage } from "@/hooks/useImage"
+import { InputImageEdit } from "./InputImageEdit"
 
 export const EditProductForm: FC<IEditProduct> = ({ idProduct, nameProduct, descriptionProduct, priceProduct, pictureProduct }) => {
   const router = useRouter()
   const [form] = Form.useForm()
   const [formLayout, setFormLayout] = useState<LayoutType>("horizontal")
+  const formItemLayout = formLayout === "horizontal" ? { labelCol: { span: 4 }, wrapperCol: { span: 14 } } : null
+  const buttonItemLayout = formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null
 
+  const [id] = useState(idProduct)
   const [name, setName] = useState(nameProduct)
   const [description, setDescription] = useState(descriptionProduct)
   const [price, setPrice] = useState(priceProduct)
-  const [picture, setPicture] = useState(pictureProduct)
   const editProduct = useProductsStore((state) => state.editProduct)
+
+  const [imageFile, setImageFile] = useState<File>()
+  const [selectedImage, setSelectedImage] = useState("")
+  const imageId = pictureProduct?.toString().split(APP_ROUTES.IMAGES + "/")[1]
+  const { imageUrl } = useImage({ id: imageId })
 
   const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
     setFormLayout(layout)
   }
 
-  const formItemLayout = formLayout === "horizontal" ? { labelCol: { span: 4 }, wrapperCol: { span: 14 } } : null
-  const buttonItemLayout = formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null
+  const changeImageFile = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
 
-  const updateProduct = () => {
-    if (name === "" || price === null) return
-
-    const newProduct: IProduct = {
-      id: String(idProduct),
-      name: String(name),
-      description: String(description),
-      price: Number(price),
-      picture: String(picture),
+    if (file) {
+      setImageFile(file)
+      console.log(file)
+      setSelectedImage(URL.createObjectURL(file))
     }
+  }
 
-    editProduct(newProduct)
-    router.push(APP_ROUTES.PRODUCTS)
+  const updateProduct = async () => {
+    if (name === "" || !imageFile) return
+
+    try {
+      const formData = new FormData()
+      formData.append("image", imageFile)
+
+      const res = await axios.post(API_ROUTES.IMAGES, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+
+      const data = await res.data
+      const { imageUrl } = data
+      console.log("get image url from api/image:", imageUrl)
+
+      const newProduct = {
+        id,
+        name,
+        description,
+        price: Number(price),
+        picture: imageUrl,
+      }
+
+      editProduct(newProduct)
+      router.push(APP_ROUTES.PRODUCTS)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
-    <Form
-      className="w-full ms-12"
-      {...formItemLayout}
-      layout={formLayout}
-      form={form}
-      initialValues={{ layout: formLayout }}
-      onValuesChange={onFormLayoutChange}
-      style={{ maxWidth: formLayout === "inline" ? "none" : 600 }}
-    >
+    <Form className="w-full ms-12" {...formItemLayout} layout={formLayout} form={form} initialValues={{ layout: formLayout }} onValuesChange={onFormLayoutChange} style={{ maxWidth: formLayout === "inline" ? "none" : 600 }}>
       <Form.Item label="Name">
         <Input value={name} onChange={(e) => setName(e.target.value)} required />
       </Form.Item>
@@ -57,11 +83,9 @@ export const EditProductForm: FC<IEditProduct> = ({ idProduct, nameProduct, desc
         <Input value={description} onChange={(e) => setDescription(e.target.value)} />
       </Form.Item>
       <Form.Item label="Price">
-        <Input value={price} onChange={(e) => setPrice(e.target.value)} required />
+        <Input value={price} onChange={(e) => setPrice(Number(e.target.value))} required />
       </Form.Item>
-      <Form.Item label="Picture">
-        <Input value={picture} onChange={(e) => setPicture(e.target.value)} />
-      </Form.Item>
+      <InputImageEdit image={selectedImage} changeImageFile={changeImageFile} imageUrl={imageUrl} />
       <Form.Item {...buttonItemLayout} className="w-full">
         <Button type="primary" className="w-full mt-5" onClick={updateProduct}>
           Edit

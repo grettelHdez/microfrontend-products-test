@@ -52,21 +52,7 @@ export const ProductsTable = () => {
       title: "",
       dataIndex: "",
       render: (text: string, record: Record) => {
-        const { editable } = record
-        return (
-          <div className="editable-row-operations">
-            {editable ? (
-              <span>
-                <a onClick={() => onSave(record.id)}>Save</a>
-                <Popconfirm title="Sure to cancel?" onConfirm={() => onCancel(record.id)}>
-                  <a>Cancel</a>
-                </Popconfirm>
-              </span>
-            ) : (
-              <a onClick={() => onEdit(record.id)}>Edit</a>
-            )}
-          </div>
-        )
+        return products.length >= 1 ? <Link href={`${APP_ROUTES.PRODUCTS}/edit/${record.id}`}>Edit</Link> : null
       },
     },
     {
@@ -84,7 +70,7 @@ export const ProductsTable = () => {
       title: "",
       dataIndex: "",
       render: (text: string, record: Record) => {
-        return products.length > 1 ? <Link href={`${APP_ROUTES.PRODUCTS}/details/${record.id}`}>Details</Link> : null
+        return products.length >= 1 ? <Link href={`${APP_ROUTES.PRODUCTS}/details/${record.id}`}>Details</Link> : null
       },
     },
   ]

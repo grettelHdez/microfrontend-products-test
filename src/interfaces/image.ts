@@ -1,8 +1,9 @@
-import { ChangeEvent,  } from "react"
+import { ChangeEvent } from "react"
 import { File } from "formidable"
 
 export interface PropsInputImage {
   image: string
+  imageUrl: string
   changeImageFile: (e: ChangeEvent<HTMLInputElement>) => void
 }
 

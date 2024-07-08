@@ -15,11 +15,10 @@ export async function getProducts(req: NextApiRequest, res: NextApiResponse) {
 export async function getProduct(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { id } = req.query
-    const product = await prisma.product.findUnique({
-      where: { id },
-    })
-
-    if (product) return res.status(200).json(product)
+    if (id) {
+      const product = await prisma.product.findUnique({ where: { id: id.toString() } })
+      if (product) return res.status(200).json({ product })
+    }
     return res.status(400).json({ message: "Product not found" })
   } catch (error) {
     return res.status(400).json("Bad Request")
@@ -52,17 +51,18 @@ export async function updateProduct(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.query
     const { name, description, price, picture } = JSON.parse(req.body)
 
-    const product = await prisma.product.update({
-      where: { id },
-      data: {
-        name,
-        description,
-        price,
-        picture,
-      },
-    })
-
-    if (product) return res.status(200).json(product)
+    if (id) {
+      const product = await prisma.product.update({
+        where: { id: id.toString() },
+        data: {
+          name,
+          description,
+          price,
+          picture,
+        },
+      })
+      if (product) return res.status(200).json(product)
+    }
     return res.status(400).json({ message: "Product not found" })
   } catch (error) {
     return res.status(400).json("Bad Request")
@@ -72,11 +72,13 @@ export async function updateProduct(req: NextApiRequest, res: NextApiResponse) {
 export async function deleteProduct(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { id } = req.query
-    const product = await prisma.product.delete({
-      where: { id },
-    })
+    if (id) {
+      const product = await prisma.product.delete({
+        where: { id: id.toString() },
+      })
 
-    if (product) return res.status(200).json(product)
+      if (product) return res.status(200).json(product)
+    }
     return res.status(400).json({ message: "Product not found" })
   } catch (error) {
     return res.status(400).json("Bad Request")

@@ -2,6 +2,7 @@ import { PropsInputImage } from "@/interfaces/image"
 import { FC } from "react"
 
 export const InputImage: FC<PropsInputImage> = ({ image, changeImageFile }) => {
+  console.log("image", image)
   return (
     <label className="ms-4 me-16 flex flex-col items-center">
       <input className="bg-blue-100" hidden type="file" onChange={changeImageFile} />

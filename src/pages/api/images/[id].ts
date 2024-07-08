@@ -1,27 +1,28 @@
+import path from "path"
 import fs from "fs/promises"
 import { NextApiRequest, NextApiResponse } from "next"
-import path from "path"
 
 export async function getImage(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { id } = req.query
-    const imagePath = path.join(process.cwd(), "src", "/uploads", id)
-    console.log(imagePath)
+    if (id) {
+      const imagePath = path.join(process.cwd(), "src", "/uploads", id.toString())
 
-    try {
-      const image = await fs.readFile(imagePath, (err, image) => {
-        if (err) {
-          throw err
-        }
-        console.log(image)
-        return image
-      })
-      console.log(image)
-      return res.status(200).json({ message: "Image founded", image })
-    } catch (error) {
-      console.log(error)
-      return res.status(400).json({ message: "Image not found", image: null })
+      try {
+        const image = await fs.readFile(imagePath, (err, image) => {
+          if (err) {
+            throw err
+          }
+          return image
+        })
+        console.log("Image founded:", image)
+        return res.status(200).json({ message: "Image founded", image })
+      } catch (error) {
+        console.log("Image not found", error)
+        return res.status(400).json({ message: "Image not found", image: null })
+      }
     }
+    return res.status(400).json({ message: "Image not found", image: null })
   } catch (error) {
     console.log(error)
     return res.status(400).json({ message: "Image not found", image: null })

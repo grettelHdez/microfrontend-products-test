@@ -1,7 +1,7 @@
+import axios from "axios"
 import { create } from "zustand"
 import { ProductState } from "@/interfaces/product"
 import { API_ROUTES, getProducts } from "@/utils/utils"
-import axios from "axios"
 
 export const useProductsStore = create<ProductState>((set, get) => ({
   products: [],

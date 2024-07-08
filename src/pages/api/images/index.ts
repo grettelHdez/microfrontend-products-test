@@ -3,7 +3,7 @@ import fs from "fs/promises"
 import formidable from "formidable"
 import { v4 as uuidv4 } from "uuid"
 import { NextApiRequest, NextApiResponse } from "next"
-import { API_ROUTES, APP_ROUTES } from "@/utils/utils"
+import { APP_ROUTES } from "@/utils/utils"
 import { ProcessedFiles } from "@/interfaces/image"
 
 export const config = {

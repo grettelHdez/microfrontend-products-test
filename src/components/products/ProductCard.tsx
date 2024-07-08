@@ -5,11 +5,15 @@ import { useProductsStore } from "@/store/store"
 import { useRouter } from "next/router"
 import { APP_ROUTES } from "@/utils/utils"
 import { Popconfirm } from "antd"
+import { useImage } from "@/hooks/useImage"
 
 export const ProductCard: FC<IProductCard> = ({ id, name, description, price, picture }) => {
   const router = useRouter()
   const deleteProduct = useProductsStore((state) => state.deleteProduct)
 
+  const imageId = picture?.toString().split(APP_ROUTES.IMAGES + "/")[1]
+  const { imageUrl } = useImage({ id: imageId })
+  
   const onDeleteProduct = (id: string | string[] | undefined) => {
     if (!id) return
     deleteProduct(id)
@@ -19,9 +23,9 @@ export const ProductCard: FC<IProductCard> = ({ id, name, description, price, pi
   return (
     <article className="w-full h-full flex flex-col items-center justify-center">
       <div className="max-w-450 min-h-623 w-full flex flex-col gap-10 mt-10 mb-10 items-center border border-gray-200 rounded-lg p-8">
-        <div className="max-h-80 flex items-center object-cover">
-          <img className="w-full h-full" src={picture} />
-        </div>
+        <Link href={picture} className="max-h-80 flex items-center object-cover">
+          <img className="w-full h-full" src={imageUrl} />
+        </Link>
         <div className="w-full flex flex-col gap-6">
           <h1 className="font-bold text-3xl">{name}</h1>
           <div className="flex flex-col">

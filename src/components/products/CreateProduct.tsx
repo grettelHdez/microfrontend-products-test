@@ -1,3 +1,4 @@
+import axios from "axios"
 import { ChangeEvent, useState } from "react"
 import { useProductsStore } from "@/store/store"
 import { Button, Form, Input } from "antd"
@@ -5,7 +6,6 @@ import { useRouter } from "next/router"
 import { API_ROUTES, APP_ROUTES } from "@/utils/utils"
 import { LayoutType } from "@/interfaces/ui"
 import { InputImage } from "./InputImage"
-import axios from "axios"
 
 export const CreateProductForm = () => {
   const router = useRouter()
@@ -37,7 +37,7 @@ export const CreateProductForm = () => {
   }
 
   const createProduct = async () => {
-    if (name === "" || price === "") return
+    if (name === "" || price === "" || !imageFile) return
 
     try {
       const formData = new FormData()
