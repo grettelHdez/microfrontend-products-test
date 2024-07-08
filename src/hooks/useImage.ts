@@ -4,6 +4,7 @@ import { API_ROUTES } from "@/utils/utils"
 
 export const useImage = ({ id }: { id: string | string[] | undefined }) => {
   const [imageUrl, setImageUrl] = useState("")
+  const [imageFile, setImageFile] = useState<File | Blob>()
 
   useEffect(() => {
     const getImage = async () => {
@@ -14,6 +15,7 @@ export const useImage = ({ id }: { id: string | string[] | undefined }) => {
         const buff = Buffer.from(image.data)
         const file = new Blob([buff])
         const url = URL.createObjectURL(file)
+        setImageFile(file)
         setImageUrl(url)
       } catch (error) {
         console.log(error)
@@ -22,5 +24,5 @@ export const useImage = ({ id }: { id: string | string[] | undefined }) => {
     if (id) getImage()
   }, [id])
 
-  return { imageUrl }
+  return { imageUrl, imageFile, setImageFile }
 }

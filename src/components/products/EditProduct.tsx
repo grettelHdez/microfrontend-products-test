@@ -5,10 +5,9 @@ import { Button, Form, Input } from "antd"
 import { useRouter } from "next/router"
 import { API_ROUTES, APP_ROUTES } from "@/utils/utils"
 import { LayoutType } from "@/interfaces/ui"
-import { InputImage } from "./InputImage"
 import { IEditProduct } from "@/interfaces/product"
 import { useImage } from "@/hooks/useImage"
-import { InputImageEdit } from "./InputImageEdit"
+import { InputImage } from "./InputImage"
 
 export const EditProductForm: FC<IEditProduct> = ({ idProduct, nameProduct, descriptionProduct, priceProduct, pictureProduct }) => {
   const router = useRouter()
@@ -17,16 +16,26 @@ export const EditProductForm: FC<IEditProduct> = ({ idProduct, nameProduct, desc
   const formItemLayout = formLayout === "horizontal" ? { labelCol: { span: 4 }, wrapperCol: { span: 14 } } : null
   const buttonItemLayout = formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null
 
-  const [id] = useState(idProduct)
-  const [name, setName] = useState(nameProduct)
-  const [description, setDescription] = useState(descriptionProduct)
-  const [price, setPrice] = useState(priceProduct)
-  const editProduct = useProductsStore((state) => state.editProduct)
+  const [id] = useState(() => {
+    return idProduct
+  })
 
-  const [imageFile, setImageFile] = useState<File>()
-  const [selectedImage, setSelectedImage] = useState("")
+  const [name, setName] = useState(() => {
+    return nameProduct
+  })
+
+  const [description, setDescription] = useState(() => {
+    return descriptionProduct
+  })
+
+  const [price, setPrice] = useState(() => {
+    return priceProduct
+  })
+
   const imageId = pictureProduct?.toString().split(APP_ROUTES.IMAGES + "/")[1]
-  const { imageUrl } = useImage({ id: imageId })
+  const { imageUrl, imageFile, setImageFile } = useImage({ id: imageId })
+  const [selectedImage, setSelectedImage] = useState("")
+  const editProduct = useProductsStore((state) => state.editProduct)
 
   const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
     setFormLayout(layout)
@@ -85,7 +94,7 @@ export const EditProductForm: FC<IEditProduct> = ({ idProduct, nameProduct, desc
       <Form.Item label="Price">
         <Input value={price} onChange={(e) => setPrice(Number(e.target.value))} required />
       </Form.Item>
-      <InputImageEdit image={selectedImage} changeImageFile={changeImageFile} imageUrl={imageUrl} />
+      <InputImage image={selectedImage} changeImageFile={changeImageFile} imageUrl={imageUrl} />
       <Form.Item {...buttonItemLayout} className="w-full">
         <Button type="primary" className="w-full mt-5" onClick={updateProduct}>
           Edit
