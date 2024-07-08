@@ -135,7 +135,6 @@ export const ProductsTable = () => {
   }
 
   const renderColumns = (text: string, record: Record, column: string) => {
-    // console.log('column:', column)
     return <EditableCell id={record.id} editable={record.editable} value={text} column={column} onChange={(value: string) => handleChange(value, record.id, column)} />
   }
 
