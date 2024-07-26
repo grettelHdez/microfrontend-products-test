@@ -27,13 +27,12 @@ export async function getProduct(req: NextApiRequest, res: NextApiResponse) {
 
 export async function createProduct(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { name, description, price, picture } = req.body
+    const { name, description, price } = req.body
     const product = await prisma.product.create({
       data: {
         name,
         description,
         price,
-        picture,
       },
     })
 
@@ -48,7 +47,7 @@ export async function createProduct(req: NextApiRequest, res: NextApiResponse) {
 
 export async function updateProduct(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { id, name, description, price, picture } = req.body
+    const { id, name, description, price } = req.body
     if (id) {
       const product = await prisma.product.update({
         where: { id: id.toString() },
@@ -56,7 +55,6 @@ export async function updateProduct(req: NextApiRequest, res: NextApiResponse) {
           name,
           description,
           price,
-          picture,
         },
       })
       if (product) return res.status(200).json(product)

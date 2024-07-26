@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client"
-import { products } from "../../lib/data"
+import { products } from "./products"
 
 const prisma = new PrismaClient()
 
@@ -13,7 +13,6 @@ async function seed() {
         name: item.name,
         description: item.description,
         price: item.price,
-        picture: item.picture,
       },
     })
     console.log(`${item.id}: ${product}`)

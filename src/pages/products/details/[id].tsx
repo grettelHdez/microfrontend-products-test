@@ -6,5 +6,5 @@ export default function Product() {
   const router = useRouter()
   const { id } = router.query
   const { product } = useProduct({ id })
-  return <>{product && <ProductCard id={id} name={product.name} description={product.description} price={product.price} picture={product.picture} />}</>
+  return <>{product && <ProductCard id={id} name={product.name} description={product.description} price={product.price} />}</>
 }

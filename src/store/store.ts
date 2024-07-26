@@ -15,7 +15,7 @@ export const useProductsStore = create<ProductState>((set, get) => ({
       const res = await axios.post(API_ROUTES.PRODUCTS, newProduct)
       const data = await res.data
       const products = get().products
-      const newProducts = [...products, { ...newProduct, id: data.id }]
+      const newProducts = [...products, data]
       set({ products: newProducts })
     } catch (error) {
       console.log(error)
@@ -24,12 +24,13 @@ export const useProductsStore = create<ProductState>((set, get) => ({
 
   editProduct: async (updateProduct) => {
     try {
-      await axios.put(`${API_ROUTES.PRODUCTS}/${updateProduct.id}`, updateProduct)
+      const res = await axios.put(`${API_ROUTES.PRODUCTS}/${updateProduct.id}`, updateProduct)
+      const data = await res.data
       const products = get().products
       const indexProduct = products.findIndex((item) => item.id === updateProduct.id)
       const headerProducts = products.slice(0, indexProduct)
       const tailProducts = products.slice(indexProduct + 1)
-      const newProducts = [...headerProducts, updateProduct, ...tailProducts]
+      const newProducts = [...headerProducts, data, ...tailProducts]
       set({ products: newProducts })
     } catch (error) {
       console.log(error)

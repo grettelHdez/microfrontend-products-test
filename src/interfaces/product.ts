@@ -3,9 +3,13 @@ export interface IProduct {
   name: string
   description?: string
   price: number
-  picture: string
-  editable?: boolean
-  [column: string]: string | boolean | number | undefined
+}
+
+export interface IProductCard {
+  id?: string | string[]
+  name: string
+  description?: string
+  price: number
 }
 
 export interface ProductState {
@@ -16,19 +20,6 @@ export interface ProductState {
   deleteProduct: (productId: string) => void
 }
 
-export interface IProductCard {
-  id: string | string[] | undefined
-  name: string
-  description: string | undefined
-  price: number
-  picture: string
-  editable?: boolean
-}
-
-export interface IEditProduct {
-  idProduct?: string
-  nameProduct: string
-  descriptionProduct?: string
-  priceProduct: number
-  pictureProduct: string
+export interface IProductForm {
+  product?: IProduct
 }

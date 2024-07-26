@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { API_ROUTES } from "@/utils/utils"
 import { IProduct } from "@/interfaces/product"
 
-export const useProduct = ({ id }: { id: string | string[] | undefined }) => {
+export const useProduct = ({ id }: { id?: string | string[] }) => {
   const [product, setProduct] = useState<IProduct>()
 
   useEffect(() => {

@@ -4,12 +4,11 @@ export const BASE_URL = "http://localhost:3001"
 
 export const API_ROUTES = {
   PRODUCTS: `${BASE_URL}/api/products`,
-  IMAGES: `${BASE_URL}/api/images`,
 }
 
 export const APP_ROUTES = {
   PRODUCTS: `${BASE_URL}/products`,
-  IMAGES: `${BASE_URL}/images`,
+  MODIFY_PRODUCT: `${BASE_URL}/products/modify`,
 }
 
 export const getProducts = async () => {
@@ -20,4 +19,8 @@ export const getProducts = async () => {
   } catch (error) {
     console.log(error)
   }
+}
+
+export const isNumber = (number: number) => {
+  return !isNaN(number)
 }
