@@ -1,13 +1,12 @@
 import Link from "next/link"
 import { Table, Popconfirm } from "antd"
-import { useProductsStore } from "@/store/store"
 import { Record } from "@/interfaces/table"
 import { APP_ROUTES } from "@/utils/utils"
+import { IProductTable } from "@/interfaces/product"
+import { FC } from "react"
+import { deleteProduct } from "@/services/products"
 
-export const ProductsTable = () => {
-  const products = useProductsStore((state) => state.products)
-  const deleteProduct = useProductsStore((state) => state.deleteProduct)
-
+export const ProductsTable: FC<IProductTable> = ({ products, setProducts }) => {
   const columns = [
     {
       title: "Id",
@@ -49,14 +48,14 @@ export const ProductsTable = () => {
       title: "",
       dataIndex: "",
       render: (record: Record) => {
-        return products.length > 0 ? <Link href={`${APP_ROUTES.MODIFY_PRODUCT}/${record.id}`}>Edit</Link> : null
+        return products && products.length > 0 ? <Link href={`${APP_ROUTES.MODIFY_PRODUCT}/${record.id}`}>Edit</Link> : null
       },
     },
     {
       title: "",
       dataIndex: "",
       render: (record: Record) => {
-        return products.length > 0 ? (
+        return products && products.length > 0 ? (
           <Popconfirm
             title="Sure to delete?"
             onConfirm={() => {
@@ -72,13 +71,15 @@ export const ProductsTable = () => {
       title: "",
       dataIndex: "",
       render: (record: Record) => {
-        return products.length > 0 ? <Link href={`${APP_ROUTES.PRODUCTS}/details/${record.id}`}>Details</Link> : null
+        return products && products.length > 0 ? <Link href={`${APP_ROUTES.PRODUCTS}/details/${record.id}`}>Details</Link> : null
       },
     },
   ]
 
   const onDelete = (id: string) => {
     deleteProduct(id)
+    const newProducts = products?.filter((item) => item.id !== id)
+    setProducts(newProducts)
   }
 
   const renderColumns = (text: string) => {

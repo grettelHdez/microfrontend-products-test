@@ -1,10 +1,13 @@
 import Link from "next/link"
 import { Suspense } from "react"
+import { useProducts } from "@/hooks/useProducts"
 import { ProductsTable } from "../../components/products/ProductsTable"
 import { PlusIcon } from "../../components/ui/icons/PlusIcon"
 import { APP_ROUTES } from "@/utils/utils"
 
 export default function ProductPage() {
+  const { products, setProducts } = useProducts()
+
   return (
     <section className="flex flex-col gap-4">
       <div className="w-full flex justify-between">
@@ -14,7 +17,7 @@ export default function ProductPage() {
         </Link>
       </div>
       <Suspense>
-        <ProductsTable />
+        <ProductsTable products={products} setProducts={setProducts} />
       </Suspense>
     </section>
   )

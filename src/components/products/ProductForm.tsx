@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react"
-import { useProductsStore } from "@/store/store"
-import { Button, Form, Input } from "antd"
 import { useRouter } from "next/router"
+import { Button, Form, Input } from "antd"
 import { LayoutType } from "@/interfaces/ui"
 import { IProductForm } from "@/interfaces/product"
-import { APP_ROUTES, isNumber } from "@/utils/utils"
+import { addProduct, editProduct, isNumber } from '@/services/products'
+import { APP_ROUTES } from "@/utils/utils"
 
 export const ProductForm: FC<IProductForm> = ({ product }) => {
   const router = useRouter()
@@ -12,8 +12,6 @@ export const ProductForm: FC<IProductForm> = ({ product }) => {
   const [formLayout, setFormLayout] = useState<LayoutType>("horizontal")
   const formItemLayout = formLayout === "horizontal" ? { labelCol: { span: 4 }, wrapperCol: { span: 14 } } : null
   const buttonItemLayout = formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null
-  const addProduct = useProductsStore((state) => state.addProduct)
-  const editProduct = useProductsStore((state) => state.editProduct)
 
   useEffect(() => {
     if (product) {
@@ -37,7 +35,7 @@ export const ProductForm: FC<IProductForm> = ({ product }) => {
         const newProduct = {
           name,
           description,
-          price:  Number(price),
+          price: Number(price),
         }
 
         if (product?.id) {

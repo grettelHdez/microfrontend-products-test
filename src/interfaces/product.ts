@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react"
+
 export interface IProduct {
   id?: string
   name: string
@@ -14,12 +16,21 @@ export interface IProductCard {
 
 export interface ProductState {
   products: IProduct[]
-  updateProducts: (newProducts: IProduct[]) => void
   addProduct: (newProduct: IProduct) => void
   editProduct: (updateProduct: IProduct) => void
   deleteProduct: (productId: string) => void
 }
 
 export interface IProductForm {
-  product?: IProduct
+  product?: IProduct | null
+}
+
+export interface IModifyProduct {
+  title: string
+  product?: IProduct | null
+}
+
+export interface IProductTable {
+  products: IProduct[] | undefined
+  setProducts: Dispatch<SetStateAction<IProduct[] | undefined>>
 }
