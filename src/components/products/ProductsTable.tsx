@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Table, Popconfirm } from "antd"
-import { Record } from "@/interfaces/table"
+import { Record } from "@/interfaces/product"
 import { APP_ROUTES } from "@/utils/utils"
 import { IProductTable } from "@/interfaces/product"
 import { FC } from "react"

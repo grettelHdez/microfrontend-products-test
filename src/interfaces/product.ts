@@ -1,5 +1,9 @@
 import { Dispatch, SetStateAction } from "react"
 
+export interface Record {
+  id?: string
+}
+
 export interface IProduct {
   id?: string
   name: string
@@ -10,7 +14,7 @@ export interface IProduct {
 export interface IProductCard {
   id?: string | string[]
   name: string
-  description?: string
+  description?: string | null
   price: number
 }
 

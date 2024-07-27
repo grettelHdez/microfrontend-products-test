@@ -4,16 +4,22 @@ import { FC, useEffect, useState } from "react"
 import { Layout, Menu } from "antd"
 import { ISidebar } from "@/interfaces/ui"
 import Icon from "@ant-design/icons/lib/components/Icon"
+import { APP_ROUTES, BASE_URL, SIDEBAR_KEYS } from "@/utils/utils"
 
 const { Sider } = Layout
 
 export const Sidebar: FC<ISidebar> = ({ collapsed }) => {
   const router = useRouter()
-  const [selectedKey, setSelectedKey] = useState("1")
+
+  const [selectedKey, setSelectedKey] = useState(() => {
+    const newRoute = `${BASE_URL}/products`
+    return newRoute.includes(APP_ROUTES.PRODUCTS) ? SIDEBAR_KEYS.KEY_2 : SIDEBAR_KEYS.KEY_1
+  })
 
   useEffect(() => {
-    if (router.pathname === "/products") setSelectedKey("2")
-    else setSelectedKey("1")
+    const newRoute = `${BASE_URL}/products`
+    if (newRoute.includes(APP_ROUTES.PRODUCTS)) setSelectedKey(SIDEBAR_KEYS.KEY_2)
+    else setSelectedKey(SIDEBAR_KEYS.KEY_1)
   }, [router.pathname])
 
   return (

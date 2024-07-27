@@ -9,6 +9,11 @@ export const APP_ROUTES = {
   MODIFY_PRODUCT: `${BASE_URL}/products/modify`,
 }
 
+export const SIDEBAR_KEYS = {
+  KEY_1: "1",
+  KEY_2: "2",
+}
+
 export const isNumber = (number: number) => {
   return !isNaN(number)
 }
