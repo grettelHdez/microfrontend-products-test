@@ -20,6 +20,7 @@ export const addProduct = async (newProduct: IProduct) => {
     return { product: data }
   } catch (error) {
     console.log(error)
+    return null
   }
 }
 
@@ -30,17 +31,17 @@ export const editProduct = async (updateProduct: IProduct) => {
     return { product: data }
   } catch (error) {
     console.log(error)
+    return null
   }
 }
 
 export const deleteProduct = async (id: string) => {
   try {
-    await axios.delete(`${API_ROUTES.PRODUCTS}/${id}`)
+    const res = await axios.delete(`${API_ROUTES.PRODUCTS}/${id}`)
+    const data = await res.data
+    return { product: data }
   } catch (error) {
     console.log(error)
+    return null
   }
-}
-
-export const isNumber = (number: number) => {
-  return !isNaN(number)
 }

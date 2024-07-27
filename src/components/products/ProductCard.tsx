@@ -1,14 +1,13 @@
 import Link from "next/link"
 import { FC } from "react"
-import { IProductCard } from "@/interfaces/product"
-import { useProductsStore } from "@/store/store"
 import { useRouter } from "next/router"
-import { APP_ROUTES } from "@/utils/utils"
 import { Popconfirm } from "antd"
+import { IProductCard } from "@/interfaces/product"
+import { APP_ROUTES } from "@/utils/utils"
+import { deleteProduct } from "@/services/products"
 
 export const ProductCard: FC<IProductCard> = ({ id, name, description, price }) => {
   const router = useRouter()
-  const deleteProduct = useProductsStore((state) => state.deleteProduct)
 
   const onDeleteProduct = (id: string | string[] | undefined) => {
     if (!id) return

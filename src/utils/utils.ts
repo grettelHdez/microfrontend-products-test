@@ -8,3 +8,19 @@ export const APP_ROUTES = {
   PRODUCTS: `${BASE_URL}/products`,
   MODIFY_PRODUCT: `${BASE_URL}/products/modify`,
 }
+
+export const isNumber = (number: number) => {
+  return !isNaN(number)
+}
+
+export const checkWhitespace = (str: string | undefined) => {
+  return !str?.replace(/\s/g, "").length
+}
+
+export const checkAnyWhiteSpace = (str: string) => {
+  return /\s/.test(str)
+}
+
+export const StartWithWhiteSpace = (str: string | undefined) => {
+  return str?.replace(/^[a-zA-Z0-9]+[a-zA-Z0-9\s]*$/, "").length
+}

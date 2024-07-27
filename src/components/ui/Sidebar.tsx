@@ -3,10 +3,12 @@ import { FC } from "react"
 import { Layout, Menu } from "antd"
 import { ISidebar } from "@/interfaces/ui"
 import Icon from "@ant-design/icons/lib/components/Icon"
+import { useRouter } from "next/router"
 
 const { Sider } = Layout
 
 export const Sidebar: FC<ISidebar> = ({ collapsed }) => {
+  const router = useRouter()
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
       <div className="logo" />
