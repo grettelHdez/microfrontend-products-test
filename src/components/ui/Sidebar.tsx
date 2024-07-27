@@ -1,18 +1,25 @@
 import Link from "next/link"
-import { FC } from "react"
+import { useRouter } from "next/router"
+import { FC, useEffect, useState } from "react"
 import { Layout, Menu } from "antd"
 import { ISidebar } from "@/interfaces/ui"
 import Icon from "@ant-design/icons/lib/components/Icon"
-import { useRouter } from "next/router"
 
 const { Sider } = Layout
 
 export const Sidebar: FC<ISidebar> = ({ collapsed }) => {
   const router = useRouter()
+  const [selectedKey, setSelectedKey] = useState("1")
+
+  useEffect(() => {
+    if (router.pathname === "/products") setSelectedKey("2")
+    else setSelectedKey("1")
+  }, [router.pathname])
+
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
       <div className="logo" />
-      <Menu className="h-screen p-4" theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+      <Menu className="h-screen p-4" theme="dark" mode="inline" selectedKeys={[selectedKey]}>
         <Menu.Item key="1">
           <Icon type="user" />
           <Link href="/">Home</Link>

@@ -75,9 +75,9 @@ export const ProductForm: FC<IProductForm> = ({ product }) => {
 
       if (product?.id) {
         const newProductId = { ...newProduct, id: product.id }
-        return createOrEdit({ newProduct: newProductId, modifyFunction: editProduct, type: "edit" })
+        createOrEdit({ newProduct: newProductId, modifyFunction: editProduct, type: "edit" })
       } else {
-        return createOrEdit({ newProduct, modifyFunction: addProduct, type: "create" })
+        createOrEdit({ newProduct, modifyFunction: addProduct, type: "create" })
       }
     }
   }
