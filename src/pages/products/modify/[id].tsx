@@ -6,6 +6,5 @@ export default function CreateProduct() {
   const route = useRouter()
   const { id } = route.query
   const { product } = useProduct({ id })
-
   return <ModifyProduct title="Edit Product" product={product} />
 }

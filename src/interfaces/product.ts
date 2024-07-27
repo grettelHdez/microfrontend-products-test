@@ -38,3 +38,7 @@ export interface IProductTable {
   products: IProduct[] | undefined
   setProducts: Dispatch<SetStateAction<IProduct[] | undefined>>
 }
+
+export interface Errors {
+  errors: string[]
+}

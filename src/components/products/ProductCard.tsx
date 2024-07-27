@@ -1,18 +1,21 @@
 import Link from "next/link"
-import { FC } from "react"
+import { FC, useState } from "react"
 import { useRouter } from "next/router"
 import { Popconfirm } from "antd"
 import { IProductCard } from "@/interfaces/product"
 import { APP_ROUTES } from "@/utils/utils"
 import { deleteProduct } from "@/services/products"
+import { PrintErrors } from "./PrintErrors"
 
 export const ProductCard: FC<IProductCard> = ({ id, name, description, price }) => {
   const router = useRouter()
+  const [errors, setErrors] = useState<string[]>([])
 
-  const onDeleteProduct = (id: string | string[] | undefined) => {
+  const onDeleteProduct = async (id: string | string[] | undefined) => {
     if (!id) return
-    deleteProduct(id.toString())
-    router.push(APP_ROUTES.PRODUCTS)
+    const res = await deleteProduct(id.toString())
+    if (!res) setErrors(["Cannot delete this product"])
+    else router.push(APP_ROUTES.PRODUCTS)
   }
 
   return (
@@ -35,6 +38,7 @@ export const ProductCard: FC<IProductCard> = ({ id, name, description, price }) 
             </a>
           </Popconfirm>
         </div>
+        <PrintErrors errors={errors} />
       </div>
     </article>
   )

@@ -5,6 +5,7 @@ import { LayoutType } from "@/interfaces/ui"
 import { IProductForm } from "@/interfaces/product"
 import { addProduct, editProduct } from "@/services/products"
 import { APP_ROUTES, createOrEdit, validateForm } from "@/utils/utils"
+import { PrintErrors } from "./PrintErrors"
 
 export const ProductForm: FC<IProductForm> = ({ product }) => {
   const router = useRouter()
@@ -85,14 +86,7 @@ export const ProductForm: FC<IProductForm> = ({ product }) => {
           {product?.id ? "Edit" : "Create"}
         </Button>
       </Form.Item>
-      <div className="flex gap-2 text-red-600 text-md">
-        {errors.length > 0 && <span>! Errors:</span>}
-        <div className="flex flex-col">
-          {errors.map((error) => (
-            <span key={error}>{error}</span>
-          ))}
-        </div>
-      </div>
+      <PrintErrors errors={errors} />
     </Form>
   )
 }
