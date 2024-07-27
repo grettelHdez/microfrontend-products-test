@@ -3,8 +3,8 @@ import { useRouter } from "next/router"
 import { FC, useEffect, useState } from "react"
 import { Layout, Menu } from "antd"
 import { ISidebar } from "@/interfaces/ui"
-import Icon from "@ant-design/icons/lib/components/Icon"
 import { APP_ROUTES, BASE_URL, SIDEBAR_KEYS } from "@/utils/utils"
+import Icon from "@ant-design/icons/lib/components/Icon"
 
 const { Sider } = Layout
 

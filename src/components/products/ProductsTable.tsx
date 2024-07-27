@@ -1,9 +1,9 @@
 import Link from "next/link"
+import { FC } from "react"
 import { Table, Popconfirm } from "antd"
 import { Record } from "@/interfaces/product"
 import { APP_ROUTES } from "@/utils/utils"
 import { IProductTable } from "@/interfaces/product"
-import { FC } from "react"
 import { deleteProduct } from "@/services/products"
 
 export const ProductsTable: FC<IProductTable> = ({ products, setProducts }) => {

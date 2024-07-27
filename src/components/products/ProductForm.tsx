@@ -2,15 +2,15 @@ import { FC, useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { Button, Form, Input } from "antd"
 import { LayoutType } from "@/interfaces/ui"
-import { IProduct, IProductForm } from "@/interfaces/product"
+import { IProductForm } from "@/interfaces/product"
 import { addProduct, editProduct } from "@/services/products"
-import { APP_ROUTES, checkAnyWhiteSpace, checkWhitespace, isNumber, StartWithWhiteSpace } from "@/utils/utils"
+import { APP_ROUTES, createOrEdit, validateForm } from "@/utils/utils"
 
 export const ProductForm: FC<IProductForm> = ({ product }) => {
   const router = useRouter()
   const [form] = Form.useForm()
   const [errors, setErrors] = useState<string[]>([])
-  const [formLayout, setFormLayout] = useState<LayoutType>("horizontal")
+  const [formLayout] = useState<LayoutType>("horizontal")
   const formItemLayout = formLayout === "horizontal" ? { labelCol: { span: 4 }, wrapperCol: { span: 14 } } : null
   const buttonItemLayout = formLayout === "horizontal" ? { wrapperCol: { span: 14, offset: 4 } } : null
 
@@ -24,69 +24,29 @@ export const ProductForm: FC<IProductForm> = ({ product }) => {
     }
   }, [product])
 
-  const onFormLayoutChange = ({ layout }: { layout: LayoutType }) => {
-    setFormLayout(layout)
-  }
-
-  const createOrEdit = async ({ newProduct, modifyFunction, type }: { newProduct: IProduct; modifyFunction: Function; type: string }) => {
-    const res = await modifyFunction(newProduct)
-    if (!res) {
-      const newErrors = [`Cannot ${type} product`]
-      setErrors(newErrors)
-      return
-    }
-    router.push(APP_ROUTES.PRODUCTS)
-  }
-
-  const validateForm = (name: string, price: number) => {
-    const newErrors: string[] = []
-
-    if (!name) {
-      newErrors.push("'Name' cannot be empty")
-    } else if (checkWhitespace(name)) {
-      newErrors.push("'Name' cannot contain only white space")
-    } else if (name.length < 2 || name.length > 255) {
-      newErrors.push("'Name' must be between 2 and 255 characters")
-    } else if (StartWithWhiteSpace(name)) {
-      newErrors.push("'Name' cannot start with blank space")
-    }
-
-    if (!price) {
-      newErrors.push("'Price' cannot be empty")
-    } else if (checkAnyWhiteSpace(price.toString())) {
-      newErrors.push("'Price' cannot contain a blank space")
-    } else if (!isNumber(price)) {
-      newErrors.push("'Price' is not a number")
-    }
-
-    setErrors(newErrors)
-    return newErrors.length <= 0
-  }
-
   const modifyProduct = async () => {
     const { Name, Description, Price } = form.getFieldsValue()
+    let errorsList = validateForm(Name, Price)
 
-    if (validateForm(Name, Price)) {
+    if (errorsList.length <= 0) {
       const newProduct = {
         name: Name,
         description: Description ? Description : "",
         price: Number(Price),
       }
 
-      if (product?.id) {
-        const newProductId = { ...newProduct, id: product.id }
-        createOrEdit({ newProduct: newProductId, modifyFunction: editProduct, type: "edit" })
-      } else {
-        createOrEdit({ newProduct, modifyFunction: addProduct, type: "create" })
-      }
+      errorsList = product?.id ? await createOrEdit({ newProduct: { ...newProduct, id: product.id }, modifyFunction: editProduct, type: "edit" }) : await createOrEdit({ newProduct, modifyFunction: addProduct, type: "create" })
+      if (errorsList.length <= 0) return router.push(APP_ROUTES.PRODUCTS)
     }
+    setErrors(errorsList)
   }
 
   return (
-    <Form className="w-full flex flex-col gap-4" {...formItemLayout} layout={formLayout} form={form} initialValues={{ layout: formLayout }} onValuesChange={onFormLayoutChange}>
+    <Form className="w-full flex flex-col gap-2 p-1 items-center" {...formItemLayout} layout={formLayout} form={form} initialValues={{ layout: formLayout }}>
       <Form.Item
-        label="Name"
+        className="w-full ms-12"
         name="Name"
+        label="Name"
         rules={[
           {
             min: 2,
@@ -95,18 +55,19 @@ export const ProductForm: FC<IProductForm> = ({ product }) => {
           },
           {
             pattern: new RegExp(/^[a-zA-Z0-9]+[a-zA-Z0-9\s]*$/),
-            message: "'Name' cannot start with blank space",
+            message: "'Name' cannot start with white space",
           },
         ]}
       >
         <Input />
       </Form.Item>
-      <Form.Item label="Description" name="Description">
+      <Form.Item className="w-full ms-12" name="Description" label="Description">
         <Input />
       </Form.Item>
       <Form.Item
-        label="Price"
+        className="w-full ms-12"
         name="Price"
+        label="Price"
         rules={[
           {
             required: true,
@@ -119,7 +80,7 @@ export const ProductForm: FC<IProductForm> = ({ product }) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item {...buttonItemLayout}>
+      <Form.Item className="w-full ms-12" {...buttonItemLayout}>
         <Button type="primary" className="w-full mt-5" onClick={modifyProduct}>
           {product?.id ? "Edit" : "Create"}
         </Button>
