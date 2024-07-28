@@ -7,6 +7,7 @@ export const API_ROUTES = {
 }
 
 export const APP_ROUTES = {
+  HOME: BASE_URL,
   PRODUCTS: `${BASE_URL}/products`,
   MODIFY_PRODUCT: `${BASE_URL}/products/modify`,
 }
