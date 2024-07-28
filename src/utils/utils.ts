@@ -1,6 +1,6 @@
 import { IProduct } from "@/interfaces/product"
 
-export const BASE_URL = "http://localhost:3001"
+export const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:3001" : "https://microfrontend-products-test-production.up.railway.app/products"
 
 export const API_ROUTES = {
   PRODUCTS: `${BASE_URL}/api/products`,
