@@ -5,13 +5,6 @@ export interface Record {
 }
 
 export interface IProduct {
-  id?: string
-  name: string
-  description?: string | null
-  price: number
-}
-
-export interface IProductCard {
   id?: string | string[]
   name: string
   description?: string | null

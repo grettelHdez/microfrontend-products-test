@@ -1,6 +1,6 @@
 import { IProduct } from "@/interfaces/product"
 
-export const BASE_URL = process.env.NODE_ENV === "development" ? "http://localhost:3001" : "https://microfrontend-products-test-production.up.railway.app/products"
+export const BASE_URL = "http://localhost:3001"
 
 export const API_ROUTES = {
   PRODUCTS: `${BASE_URL}/api/products`,
@@ -29,7 +29,7 @@ export const checkAnyWhiteSpace = (str: string) => {
   return /\s/.test(str)
 }
 
-export const StartWithWhiteSpace = (str: string | undefined) => {
+export const startWithWhiteSpace = (str: string | undefined) => {
   return str?.replace(/^[a-zA-Z0-9]+[a-zA-Z0-9\s]*$/, "").length
 }
 
@@ -49,7 +49,7 @@ export const validateForm = (name: string, price: number) => {
     newErrors.push("'Name' cannot contain only white space")
   } else if (name.length < 2 || name.length > 255) {
     newErrors.push("'Name' must be between 2 and 255 characters")
-  } else if (StartWithWhiteSpace(name)) {
+  } else if (startWithWhiteSpace(name)) {
     newErrors.push("'Name' cannot start with white space")
   }
 

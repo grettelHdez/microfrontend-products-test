@@ -2,12 +2,12 @@ import Link from "next/link"
 import { FC, useState } from "react"
 import { useRouter } from "next/router"
 import { Popconfirm } from "antd"
-import { IProductCard } from "@/interfaces/product"
+import { IProduct } from "@/interfaces/product"
 import { APP_ROUTES } from "@/utils/utils"
 import { deleteProduct } from "@/services/products"
 import { PrintErrors } from "./PrintErrors"
 
-export const ProductCard: FC<IProductCard> = ({ id, name, description, price }) => {
+export const ProductCard: FC<IProduct> = ({ id, name, description, price }) => {
   const router = useRouter()
   const [errors, setErrors] = useState<string[]>([])
 
